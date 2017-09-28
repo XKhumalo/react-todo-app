@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import NewTask from './NewTask.js';
+import TaskList from './TaskList.js';
+import Task from './Task.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tasks: [],
+      toggleAllCheckboxHidden: true
+    }
+
+    this.handleTaskAdd = this.handleTaskAdd.bind(this);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>todos</h1>
+        <NewTask onTaskAdd={this.handleTaskAdd} toggleAllCheckboxHidden={this.state.toggleAllCheckboxHidden} />
+        <TaskList tasks={this.state.tasks} />
       </div>
     );
+  }
+
+  handleTaskAdd(newTask) {
+    this.setState({
+      tasks: [...this.state.tasks, newTask],
+      toggleAllCheckboxHidden: true
+    })
   }
 }
 
